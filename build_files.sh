@@ -1,18 +1,13 @@
-echo "BUILD START"
+#!/bin/bash
 
-# create a virtual environment named 'venv' if it doesn't already exist
-python3.9 -m venv venv
-
-# activate the virtual environment
-source venv/bin/activate
-
-# install all deps in the venv
+# Install dependencies
 pip install -r requirements.txt
 
-# collect static files using the Python interpreter from venv
+# Collect static files
 python manage.py collectstatic --noinput
 
-echo "BUILD END"
+# Create a directory for the static files
+mkdir -p staticfiles_build
 
-# [optional] Start the application here 
-# python manage.py runserver
+# Move the static files to the staticfiles_build directory
+mv static staticfiles_build/
