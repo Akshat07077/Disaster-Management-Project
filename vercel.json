@@ -22,17 +22,5 @@
         "dest": "disaster_management/wsgi.py"
       }
     ]
-    {
-        "functions": {
-        "api/test.js": {
-          "memory": 3009,
-          "maxDuration": 30
-        },
-        "api/*.js": {
-          "memory": 3009,
-          "maxDuration": 30
-    }
-  }
-}
   }
   
