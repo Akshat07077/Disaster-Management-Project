@@ -21,13 +21,14 @@
         "src": "/(.*)",
         "dest": "disaster_management/wsgi.py"
       }
-    ]
-  }
-{
-  "functions": {
-    "api/**": {
-      "excludeFiles": "{.next,*.cache,node_modules,public,app}/**"
+        {
+        "functions": {
+        "api/**": {
+        "excludeFiles": "{.next,*.cache,node_modules,public,app}/**"
     }
   }
+    ]
+  }
+
 }
   
