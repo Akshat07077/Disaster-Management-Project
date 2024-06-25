@@ -7,8 +7,6 @@
         "maxLambdaSize": "15mb",
         "includeFiles": [
           "disaster_management/**",
-          "static/**",
-          "templates/**",
           "requirements.txt"
         ],
         "excludeFiles": [
@@ -19,7 +17,13 @@
           "node_modules/**",
           "venv/**",
           "env/**",
-          "tests/**"
+          "tests/**",
+          "static/**",
+          "templates/**",
+          "media/**",
+          "*.log",
+          "docs/**",
+          "*.md"
         ]
       }
     },
