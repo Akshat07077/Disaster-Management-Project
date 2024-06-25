@@ -1,40 +1,10 @@
 {
-  "builds": [
-    {
-      "src": "disaster_management/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "includeFiles": [
-          "disaster_management/**",
-          "requirements.txt"
-        ],
-        "excludeFiles": [
-          "__pycache__/**",
-          "*.pyc",
-          "*.pyo",
-          "*.pyd",
-          "node_modules/**",
-          "venv/**",
-          "env/**",
-          "tests/**",
-          "static/**",
-          "templates/**",
-          "media/**",
-          "*.log",
-          "docs/**",
-          "*.md"
-        ]
-      }
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles_build"
-      }
+  "functions": {
+    "api/index.py": {
+      "memory": 1024,
+      "maxDuration": 30
     }
-  ],
+  },
   "routes": [
     {
       "src": "/static/(.*)",
@@ -42,7 +12,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "disaster_management/wsgi.py"
+      "dest": "/api/index.py"
     }
   ]
 }
