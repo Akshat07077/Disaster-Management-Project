@@ -1,0 +1,50 @@
+{% extends 'disasters/base.html' %}
+{% load static %}
+
+{% block title %}Disaster Events{% endblock %}
+
+{% block content %}
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        background: url({%static 'b3.jpg'%}) no-repeat center center fixed;
+        background-size: cover;
+        background-position: top;
+    }
+    .container {
+        background-color: rgba(255, 255, 255, 0%);
+        padding: 20px;
+        border-radius: 8px;
+    }
+    .list-group-item a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    .list-group-item a:hover {
+        text-decoration: underline;
+    }
+</style>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">Disaster Events</h2>
+            <form method="get" action="{% url 'index' %}" class="form-inline mb-4">
+                <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search events" value="{{ query }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <ul class="list-group">
+                {% for event in events %}
+                <li class="list-group-item">
+                    <a href="{% url 'event_detail' event.id %}">{{ event.name }}</a>
+                </li>
+                {% empty %}
+                <li class="list-group-item">Search Results will be shown here</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

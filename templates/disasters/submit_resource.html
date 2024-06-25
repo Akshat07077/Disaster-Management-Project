@@ -1,0 +1,124 @@
+{% extends 'disasters/base.html' %}
+{% block title %}Submit Resource{% endblock %}
+{% load static %}
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        background: url('{% static 'bg4.jpg' %}') no-repeat center center fixed;
+        background-size: cover;
+        background-position: top;
+    }
+    .grid {
+        display: grid;
+        place-items: center;
+        padding: 20px;
+    }
+    section {
+        max-width: 600px;
+        background-color: #8bb1945c;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #0056b3;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    textarea {
+        resize: vertical;
+        height: 40px
+    }
+    form {
+        display: grid;
+        gap: 20px;
+    }
+    .form-group {
+        margin-bottom: 0;
+    }
+    .form-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #0056b3;
+    }
+    .form-control {
+        border-radius: 4px;
+        padding: 8px;
+    }
+    .form-text {
+        color: #6c757d;
+        font-size: 0.875rem;
+    }
+    button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<main class="container">
+    <div class="grid">
+        <section>
+            <h2>Submit Resource</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Report Event</button>
+            </form>
+        </section>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch event type data from backend and format it for Chart.js
+        const eventTypes = ['Type A', 'Type B', 'Type C'];  // Example event types
+        const eventTypeCounts = [10, 5, 7];  // Example counts for each type
+
+        // Chart.js configuration
+        const ctx = document.getElementById('eventTypeChart').getContext('2d');
+        const eventTypeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: eventTypes,
+                datasets: [{
+                    label: 'Event Type Counts',
+                    data: eventTypeCounts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

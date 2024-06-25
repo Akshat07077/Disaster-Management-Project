@@ -1,0 +1,113 @@
+{% extends 'disasters/base.html' %}
+{% load static %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            background: url('{% static 'bg4.jpg' %}') no-repeat center center fixed;
+            background-size: cover;
+            background-position: top;
+        }
+        .password-toggle {
+            cursor: pointer;
+            margin-left: -25px; /* Adjust based on your layout */
+            position: relative;
+            top: -25px;
+            left: 90%;
+            z-index: 2;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #0056b3;
+            display: block;
+        }
+        .form-control {
+            border-radius: 4px;
+            padding: 10px;
+            width: calc(100% - 40px); /* Adjust width as needed */
+            display: inline-block;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        .form-text {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <div class="grid">
+        <section>
+            <hgroup>
+                <h2>Register</h2>
+            </hgroup>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" id="id_username">
+                </div>
+                <div class="form-group">
+                    <label for="id_email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="id_email">
+                </div>
+                <div class="form-group">
+                    <label for="id_phone_number" class="form-label">Phone Number</label>
+                    <input type="text" name="phone_number" class="form-control" id="id_phone_number">
+                </div>
+                <div class="form-group">
+                    <label for="id_password1" class="form-label">Password</label>
+                    <input type="password" name="password1" class="form-control" id="id_password1">
+                    <span class="password-toggle">👁️</span>
+                    <small class="form-text">Use at least 8 characters.</small>
+                </div>
+                <div class="form-group">
+                    <label for="id_password2" class="form-label">Confirm Password</label>
+                    <input type="password" name="password2" class="form-control" id="id_password2">
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordFields = document.querySelectorAll('input[type="password"]');
+            passwordFields.forEach((field) => {
+                const toggle = document.createElement('span');
+                toggle.textContent = '👁️';
+                toggle.classList.add('password-toggle');
+                toggle.addEventListener('click', () => {
+                    if (field.type === 'password') {
+                        field.type = 'text';
+                    } else {
+                        field.type = 'password';
+                    }
+                });
+                field.parentNode.insertBefore(toggle, field.nextSibling);
+            });
+        });
+    </script>
+{% endblock %}

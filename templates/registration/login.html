@@ -1,0 +1,136 @@
+<!-- disasters/templates/registration/login.html -->
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        .password-toggle {
+            cursor: pointer;
+            margin-left: -25px; /* Adjust based on your layout */
+        }
+        .container-fluid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+        }
+        .container-fluid ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        .container-fluid ul li {
+            margin-right: 20px;
+        }
+        .container-fluid ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .container {
+            position: relative;
+            overflow: hidden;
+        }
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+        .grid {
+            display: grid;
+            place-items: center;
+            height: 100vh;
+        }
+        section {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo and Navigation -->
+    <nav class="container-fluid">
+        <ul>
+            <li><img src="{% static 'logo.png' %}" alt="Logo" style="height: 60px;"></li>
+            <li><strong style=" color: white;">Disaster Management</strong></li>
+        </ul>
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
+
+    <!-- Background Video -->
+    <video class="bg-video" autoplay muted loop>
+        <source src="{% static 'bgv.mp4' %}" type="video/mp4">
+        <!-- Add other video sources for compatibility if needed -->
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Login Form -->
+    <main class="container">
+        <div class="grid">
+            <section>
+                <hgroup>
+                    <strong><h3>Login</h3></strong>
+                </hgroup>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Login</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Script for Password Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordFields = document.querySelectorAll('input[type="password"]');
+            passwordFields.forEach((field) => {
+                const toggle = document.createElement('span');
+                toggle.textContent = '👁️';
+                toggle.classList.add('password-toggle');
+                toggle.addEventListener('click', () => {
+                    if (field.type === 'password') {
+                        field.type = 'text';
+                    } else {
+                        field.type = 'password';
+                    }
+                });
+                field.parentNode.insertBefore(toggle, field.nextSibling);
+            });
+        });
+    </script>
+</body>
+</html>

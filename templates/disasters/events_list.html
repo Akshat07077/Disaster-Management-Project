@@ -1,0 +1,69 @@
+{% extends 'disasters/base.html' %}
+{%load static%}
+{% block title %}All Events{% endblock %}
+
+{% block content %}
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            background: url('{% static 'bg2.jpg' %}') no-repeat center center fixed;
+            background-size: cover;
+            background-position: top;
+        }
+        .event-card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .event-card h3 {
+            margin-top: 0;
+        }
+        .event-card p {
+            margin: 5px 0;
+        }
+        .event-card .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+        .event-card .button:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+
+    <div class="grid">
+        <section>
+            <hgroup>
+                <h2 style=" color: white;">All Events</h2>
+            </hgroup>
+            {% if events %}
+            <form method="get" action="{% url 'search_events' %}" class="form-inline mb-4">
+                <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search events" value="{{ query }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+                {% for event in events %}
+                    <div class="event-card">
+                        <h3>{{ event.name }}</h3>
+                        <p><strong>Type:</strong> {{ event.event_type }}</p>
+                        <p><strong>Location:</strong> {{ event.location }}</p>
+                        <p><strong>Date:</strong> {{ event.date_occurred }}</p>
+                        <p><strong>Description:</strong> {{ event.description }}</p>
+                        <a href="{% url 'event_detail' event.id %}" class="button">View Details</a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No events found.</p>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

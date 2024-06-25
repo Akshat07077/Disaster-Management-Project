@@ -1,0 +1,119 @@
+{% extends 'disasters/base.html' %}
+{% load static %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    /* Simplified and optimized CSS */
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        background: url('{% static 'bg1.jpg' %}') no-repeat center center fixed;
+        background-size: cover;
+        background-position: bottom;
+    }
+    .container {
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 30px;
+        border-radius: 8px;
+        {% comment %} box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); {% endcomment %}
+        margin-top: 50px;
+        max-width: 800px;
+    }
+    .form-control {
+        border-radius: 4px;
+        padding: 0px;
+    }
+    .btn-primary {
+        width: 100%;
+        padding: 20px 20px;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    .form-icon {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+    }
+    .input-icon {
+        position: relative;
+    }
+    .input-icon input {
+        padding-left: 2.5rem;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        {% comment %} <div class="col-md-8"> {% endcomment %}
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Create Event</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="row g-3" novalidate>
+                        {% csrf_token %}
+                        <div class="col-md-12 mb-3">
+                            <label for="event_type" class="form-label">Event Type</label>
+                            <select name="event_type" id="event_type" class="form-select" required>
+                                <option value="" selected disabled>Select Event Type</option>
+                                <option value="flood">Flood</option>
+                                <option value="earthquake">Earthquake</option>
+                                <option value="hurricane">Hurricane</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        {% for field in form %}
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-{{ field.name }}"></i></span>
+                                <input type="text" name="{{ field.name }}" class="form-control" id="{{ field.id_for_label }}" required>
+                                {% if field.help_text %}
+                                <div class="form-text">{{ field.help_text }}</div>
+                                {% endif %}
+                                <div class="invalid-feedback">
+                                    {% for error in field.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Create Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% comment %} </div> {% endcomment %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Form validation with Bootstrap 5
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'disasters/base.html' %}
+{% block title %}Event Details{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<style>
+    .grid {
+        display: grid;
+        place-items: center;
+        padding: 20px;
+    }
+    section {
+        max-width: 900px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    h2, h3 {
+        color: #0056b3;
+    }
+    p {
+        line-height: 1.6;
+    }
+    hr {
+        border: 0.5px solid #ccc;
+        margin: 20px 0;
+    }
+    #map {
+        height: 400px;
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="grid">
+    <section>
+        <h2>Name: {{ event.name }}</h2>
+        <h3>Type: {{ event.event_type }}</h3>
+        
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Date:</strong> {{ event.date_occurred }}</p>
+        <p><strong>Description:</strong> {{ event.description }}</p>
+
+        <!-- Debugging -->
+        <p>Latitude: {{ event.latitude }}</p>
+        <p>Longitude: {{ event.longitude }}</p>
+
+        <div id="map"></div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var lat = {{ event.latitude|default:"0" }};
+                var lng = {{ event.longitude|default:"0" }};
+                if (lat && lng && lat != "0" && lng != "0") {
+                    var map = L.map('map').setView([lat, lng], 13);
+                    L.tileLayer('https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=N6ik3KpcIh4ESzUn7eEu', {
+                        attribution: '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(map);
+                    var marker = L.marker([lat, lng]).addTo(map)
+                        .bindPopup('<b>{{ event.name }}</b><br>{{ event.location }}')
+                        .openPopup();
+                } else {
+                    console.error("Latitude and Longitude values are missing or invalid.");
+                }
+            });
+        </script>
+
+        <hr>
+
+        <h3>Reports</h3>
+        {% if reports %}
+            <ul>
+                {% for report in reports %}
+                    <li>
+                        <strong>Reporter:</strong> {{ report.reporter_name }}<br>
+                        <strong>Contact Info:</strong> {{ report.contact_info }}<br>
+                        <strong>Details:</strong> {{ report.details }}<br>
+                        <strong>Date:</strong> {{ report.report_date }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No reports for this event.</p>
+        {% endif %}
+
+        <h3>Resources</h3>
+        {% if resources %}
+            <ul>
+                {% for resource in resources %}
+                    <li>
+                        <strong>Type:</strong> {{ resource.resource_type }}<br>
+                        <strong>Quantity:</strong> {{ resource.quantity }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No resources for this event.</p>
+        {% endif %}
+        
+        <hr>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!-- disasters/templates/disasters/admin_dashboard.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>Disaster Management</strong></li>
+        </ul>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'create_event' %}">Create Event</a></li>
+            <li><a href="{% url 'report_event' %}">Report Event</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}" role="button">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" role="button">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <main class="container">
+        <div class="grid">
+            <section>
+                <h2>Admin Dashboard</h2>
+                <p><strong>Total Events:</strong> {{ events_count }}</p>
+                <p><strong>Total Reports:</strong> {{ reports_count }}</p>
+                <p><strong>Total Resources:</strong> {{ resources_count }}</p>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

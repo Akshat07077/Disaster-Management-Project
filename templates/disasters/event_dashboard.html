@@ -1,0 +1,126 @@
+{% extends 'disasters/base.html' %}
+
+{% block title %}Event Dashboard{% endblock %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    .container {
+        margin-top: 20px;
+    }
+    .search-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+    .search-container input {
+        max-width: 300px;
+    }
+    .chart-container {
+        position: relative;
+        height: 400px;
+        margin-bottom: 40px;
+    }
+</style>
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col">
+            <h2>Event Dashboard</h2>
+        </div>
+        <div class="col text-end">
+            <div class="search-container">
+                <input type="text" id="search" class="form-control" placeholder="Search events...">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="eventChartLocation"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container">
+                <canvas id="eventChartType"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctxLocation = document.getElementById('eventChartLocation').getContext('2d');
+        const ctxType = document.getElementById('eventChartType').getContext('2d');
+        let chartLocation;
+        let chartType;
+
+        function fetchData(searchTerm = '') {
+            fetch(`{% url 'get_event_data' %}?search=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Update Location Chart
+                    if (chartLocation) {
+                        chartLocation.destroy();
+                    }
+                    chartLocation = new Chart(ctxLocation, {
+                        type: 'bar',
+                        data: {
+                            labels: data.location.labels,
+                            datasets: [{
+                                label: 'Event Counts by Location',
+                                data: data.location.data,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // Update Type Chart
+                    if (chartType) {
+                        chartType.destroy();
+                    }
+                    chartType = new Chart(ctxType, {
+                        type: 'bar',
+                        data: {
+                            labels: data.type.labels,
+                            datasets: [{
+                                label: 'Event Counts by Type',
+                                data: data.type.data,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
+        document.getElementById('search').addEventListener('input', function () {
+            const searchTerm = this.value;
+            fetchData(searchTerm);
+        });
+
+        fetchData(); // Initial fetch
+    });
+</script>
+{% endblock %}

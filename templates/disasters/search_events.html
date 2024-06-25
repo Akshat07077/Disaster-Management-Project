@@ -1,0 +1,28 @@
+{% extends 'disasters/base.html' %}
+
+{% block title %}Search Events{% endblock %}
+
+{% block content %}
+    <form method="get" action="{% url 'search_events' %}">
+        <input type="text" name="q" placeholder="Search events">
+        <select name="event_type">
+            <option value="">All Types</option>
+            <option value="Flood">Flood</option>
+            <option value="Earthquake">Earthquake</option>
+            <option value="Tornado">Tornado</option>
+            <option value="Wildfire">Wildfire</option>
+            <option value="Hurricane">Hurricane</option>
+            <option value="Volcano">Volcano</option>
+            <option value="Other">Other</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        {% for event in events %}
+            <li>
+                <a href="{% url 'event_detail' event.id %}">{{ event.name }}</a> - {{ event.event_type }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
