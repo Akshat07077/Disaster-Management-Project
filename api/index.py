@@ -17,11 +17,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'disaster_management.settings')
 django.setup()
 
 # Define a simple view to test database access
-from disaster_management.models import YourModel  # Replace YourModel with your actual model
+from disaster_management.models import DisasterEvent 
 
 def get_data(request):
     # Example query to get all entries from YourModel
-    data = list(YourModel.objects.all().values())
+    data = list(DisasterEvent.objects.all().values())
     return JsonResponse({'data': data})
 
 # Define URL patterns
