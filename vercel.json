@@ -1,7 +1,6 @@
 {
   "functions": {
     "api/index.py": {
-      "includeFiles": "db.sqlite3"
       "memory": 1024,
       "maxDuration": 30
     }
