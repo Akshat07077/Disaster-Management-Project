@@ -1,19 +1,45 @@
 import os
 import sys
+import django
+from django.conf import settings
+from django.core.wsgi import get_wsgi_application
+from django.http import JsonResponse
+from django.urls import path
+from django.core.management import call_command
 
-# Adjust the path to your Django app
+# Add the Django app to the Python path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-import { createRequire } from 'node:module';
-
-let sayHello = createRequire(import.meta.url)('../db.sqlite3');
-
-export function GET(request) {
-  return new Response(sayHello());
-}
 
 # Set the environment variable for Django settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'disaster_management.settings')
 
-from django.core.wsgi import get_wsgi_application
+# Initialize Django
+django.setup()
 
-app = get_wsgi_application()
+# Define a simple view to test database access
+from disaster_management.models import YourModel  # Replace YourModel with your actual model
+
+def get_data(request):
+    # Example query to get all entries from YourModel
+    data = list(YourModel.objects.all().values())
+    return JsonResponse({'data': data})
+
+# Define URL patterns
+urlpatterns = [
+    path('api/index.py', get_data),
+]
+
+# Set up Django application
+application = get_wsgi_application()
+
+# Custom WSGI handler
+class DjangoWSGIApplication(django.core.handlers.wsgi.WSGIHandler):
+    def __call__(self, environ, start_response):
+        request = self.request_class(environ)
+        response = self.get_response(request)
+        if request.path == '/api/index.py':
+            response = get_data(request)
+        return response(environ, start_response)
+
+# Instantiate the custom WSGI application
+app = DjangoWSGIApplication()
