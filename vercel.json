@@ -2,7 +2,8 @@
   "functions": {
     "api/index.py": {
       "memory": 1024,
-      "maxDuration": 30
+      "maxDuration": 30,
+      "includeFiles": "db/db.sqlite3"
     }
   },
   "routes": [
@@ -11,8 +12,12 @@
       "dest": "/static/$1"
     },
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "/api/index.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
