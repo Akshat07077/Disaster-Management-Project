@@ -51,6 +51,4 @@ class Resource(models.Model):
     quantity = models.IntegerField()
     def __str__(self):
         return f'{self.resource_type} for {self.event.name}'
-class YourModel(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
+
