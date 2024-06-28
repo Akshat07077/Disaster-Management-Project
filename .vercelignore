@@ -1,5 +1,5 @@
 *.log
-*.sqlite3
+*db.sqlite3
 __pycache__/
 *.pyc
 *.pyo
