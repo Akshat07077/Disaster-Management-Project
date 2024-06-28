@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
+from decouple import Config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-t$(5)=s_^-gx#71g^$xdenvkn(5bh9p-(p7_wt(v+2wjs$g*3b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*','https://disaster-managemeent-projec.vercel.app/']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -78,9 +80,10 @@ WSGI_APPLICATION = 'disaster_management.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -146,3 +149,4 @@ DEFAULT_FROM_EMAIL = 'shouryasharma13@gmail.com'
 TWILIO_ACCOUNT_SID = 'AC4d7e54e433eb88d8e9d3f65e696907b2'
 TWILIO_AUTH_TOKEN = 'd383f6694dcbb8333ab8a922bf00bc82'
 TWILIO_PHONE_NUMBER = '+12536666103'
+
