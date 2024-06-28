@@ -10,3 +10,7 @@ python3.9 manage.py migrate --noinput
 
 echo "Collect Static..."
 python3.9 manage.py collectstatic --noinput --clear
+mkdir -p staticfiles_build
+
+# Move the static files to the staticfiles_build directory
+mv static staticfiles_build/
