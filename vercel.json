@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "disasters/wsgi.py",
+            "src": "disaster_management/wsgi.py",
             "use": "@vercel/python",
             "config": {
                 "maxLambdaSize": "15mb",
@@ -24,7 +24,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "disasters/wsgi.py"
+            "dest": "disaster_management/wsgi.py"
         }
     ]
 
