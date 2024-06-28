@@ -25,6 +25,7 @@ oauthlib==3.2.2
 packaging==24.1
 phonenumbers==8.13.39
 platformdirs==3.0.0
+psycopg2-binary==2.9.9
 pycparser==2.22
 pygitguardian==1.15.2
 Pygments==2.18.0
