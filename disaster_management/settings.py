@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
-from decouple import config
+from decouple import Config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-t$(5)=s_^-gx#71g^$xdenvkn(5bh9p-(p7_wt(v+2wjs$g*3b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -119,9 +119,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-# STATICFILES_DIRS =[BASE_DIR/'static']
-STATIC_ROOT = BASE_DIR / "staticfiles_build" / "static"
+STATIC_URL = 'static/'
+STATICFILES_DIRS =[BASE_DIR/'static']
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -149,4 +149,3 @@ DEFAULT_FROM_EMAIL = 'shouryasharma13@gmail.com'
 TWILIO_ACCOUNT_SID = 'AC4d7e54e433eb88d8e9d3f65e696907b2'
 TWILIO_AUTH_TOKEN = 'd383f6694dcbb8333ab8a922bf00bc82'
 TWILIO_PHONE_NUMBER = '+12536666103'
-
