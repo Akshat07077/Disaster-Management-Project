@@ -1,13 +1,12 @@
 #!/bin/bash
 
-# Install dependencies
-pip install -r requirements.txt
+# Build the project
+echo "Building the project..."
+python3.9 -m pip install -r requirements.txt
 
-# Collect static files
-python manage.py collectstatic --noinput
+echo "Make Migration..."
+python3.9 manage.py makemigrations --noinput
+python3.9 manage.py migrate --noinput
 
-# Create a directory for the static files
-mkdir -p staticfiles_build
-
-# Move the static files to the staticfiles_build directory
-mv static staticfiles_build/
+echo "Collect Static..."
+python3.9 manage.py collectstatic --noinput --clear
