@@ -5,6 +5,16 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
 <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        background: url('{% static 'bg1.jpg' %}') no-repeat center center fixed;
+        background-size: cover;
+        background-position: bottom;
+    }
+
     .grid {
         display: grid;
         place-items: center;
