@@ -28,4 +28,8 @@ Follow these steps to set up the project locally:
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Akshat07077/Disaster-Management-Project.git
-   cd disaster-management-system
+   cd Disaster-Management-Project
+
+2. **Run Project:**
+   ```bash
+   python run manage.py
